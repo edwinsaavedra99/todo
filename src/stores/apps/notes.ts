@@ -107,7 +107,7 @@ export const useNoteStore = defineStore({
                 } catch (error) {
                     alert(error);
                 }
-            }, 100);
+            }, 1000);
         }
     }
 });
