@@ -9,6 +9,7 @@ interface NotesType {
     title?: string;
     datef?: Date | any;
     deleted?: boolean;
+    isCompleted?: boolean;
 }
 
 interface noteType {
@@ -32,7 +33,6 @@ export const useNoteStore = defineStore({
                 this.notes = data.data;
             } catch (error) {
                 alert(error);
-                console.log(error);
             }
         },
 
@@ -40,10 +40,25 @@ export const useNoteStore = defineStore({
         SelectNote(itemID: number) {
             this.notesContent = itemID;
         },
-
         deleteNote(itemID: number) {
             const index = this.notes.findIndex((p) => p.id == itemID);
             this.notes.splice(index, 1);
+        },
+        deleteCompletes(){
+            this.notes = this.notes.filter((item)=>{
+                return !item.isCompleted;
+            });
+        },
+        updateState(itemID: number, isCompleted: boolean) {
+            this.notes = map(this.notes, (note: any) => {
+                if (note.id === itemID) {
+                    return {
+                        ...note,
+                        isCompleted: isCompleted
+                    };
+                }
+                return note;
+            });
         },
         updateNote(itemID: number, itemColor: any) {
             this.notes = map(this.notes, (note: any) => {
