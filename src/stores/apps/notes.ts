@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 import axios from '@/utils/axios';
+import { api } from '../../../envd';
 
 interface NotesType {
     id?: number | any;
     color?: string;
     title?: string;
-    datef?: Date | any;
+    date?: Date | any;
     deleted?: boolean;
     isCompleted?: boolean;
 }
@@ -30,7 +31,7 @@ export const useNoteStore = defineStore({
     actions: {
         async fetchNotes() {
             try {
-                let url = 'http://127.0.0.1:5000/tasks';
+                let url =  api + '/tasks';
                 if(this.filterCompleted) {
                     url += '?isCompleted=true'
                 }
@@ -42,9 +43,11 @@ export const useNoteStore = defineStore({
         },
         async addNotes(body: any) {
             try {
-                await axios.post('http://127.0.0.1:5000/tasks', body);
-                const data = await axios.get('http://127.0.0.1:5000/tasks');
-                this.notes = data.data;
+                await axios.post(api + '/tasks', body);
+                if (this.filterCompleted) {
+                    this.filterCompletedUpdate();
+                }
+                this.fetchNotes();
             } catch (error) {
                 alert(error);
             }
@@ -57,42 +60,38 @@ export const useNoteStore = defineStore({
         },
         async deleteNote(itemID: number) {
             try {
-                await axios.delete('http://127.0.0.1:5000/tasks/' + itemID);
-                const data = await axios.get('http://127.0.0.1:5000/tasks');
-                this.notes = data.data;
+                await axios.delete(api + '/tasks/' + itemID);
+                this.fetchNotes();
             } catch (error) {
                 alert(error);
             }
         },
         async deleteCompletes(){
             try {
-                await axios.delete('http://127.0.0.1:5000/tasks/completed');
-                const data = await axios.get('http://127.0.0.1:5000/tasks');
-                this.notes = data.data;
+                await axios.delete(api + '/tasks/completed');
+                this.fetchNotes();
             } catch (error) {
                 alert(error);
             }
         },
         async updateState(itemID: number, isCompleted: boolean) {
             try {
-                await axios.put('http://127.0.0.1:5000/tasks/'+itemID, {
+                await axios.put(api + '/tasks/'+itemID, {
                     ...this.notes.find((item)=> { return item.id == itemID}),
                     isCompleted: isCompleted
                 });
-                const data = await axios.get('http://127.0.0.1:5000/tasks');
-                this.notes = data.data;
+                this.fetchNotes();
             } catch (error) {
                 alert(error);
             }
         },
         async updateNote(itemID: number, itemColor: any) {
             try {
-                await axios.put('http://127.0.0.1:5000/tasks/'+itemID, {
+                await axios.put(api + '/tasks/'+itemID, {
                     ...this.notes.find((item)=> { return item.id == itemID}),
                     color: itemColor
                 });
-                const data = await axios.get('http://127.0.0.1:5000/tasks');
-                this.notes = data.data;
+                this.fetchNotes();
             } catch (error) {
                 alert(error);
             }
@@ -103,13 +102,12 @@ export const useNoteStore = defineStore({
             }
             this.timeout = setTimeout(async () => {
                 try {
-                    await axios.put('http://127.0.0.1:5000/tasks/' + itemID, body);
-                    const data = await axios.get('http://127.0.0.1:5000/tasks');
-                    this.notes = data.data;
+                    await axios.put(api + '/tasks/' + itemID, body);
+                    this.fetchNotes();
                 } catch (error) {
                     alert(error);
                 }
-            }, 500);
+            }, 100);
         }
     }
 });

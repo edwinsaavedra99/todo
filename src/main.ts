@@ -6,10 +6,8 @@ import vuetify from './plugins/vuetify';
 import '@/scss/style.scss';
 import PerfectScrollbar from 'vue3-perfect-scrollbar';
 import VueTablerIcons from 'vue-tabler-icons';
-import 'vue3-carousel/dist/carousel.css';
 import './_mockApis';
 import Maska from 'maska';
-import 'vue3-easy-data-table/dist/style.css';
 
 const app = createApp(App);
 app.use(router);
