@@ -12,7 +12,6 @@ const getNotes = computed(() => {
     return store.notes;
 });
 
-
 const checkedTask = function getCompleted(isCompleted: boolean) {
     if (isCompleted) return 'strikethrough-text';
     return '';
@@ -42,14 +41,14 @@ const filteredNotes = computed(() => {
                     hide-details
                     density="compact"
                 />
-                <v-btn class='mx-2' density="compact" icon>
-                    <v-icon color="grey-lighten-1">
-                        mdi-filter
+                <v-btn class='mx-2' density="compact" icon @click='store.filterCompletedUpdate(); store.fetchNotes()'>
+                    <v-icon>
+                        {{ store.filterCompleted ? 'mdi-filter' : 'mdi-filter-remove' }}
                     </v-icon>
-                    <v-tooltip activator="parent" location="top">Filter completed</v-tooltip>
+                    <v-tooltip activator="parent" location="top">Filter see only completed</v-tooltip>
                 </v-btn>
                 <v-btn density="compact" icon @click='store.deleteCompletes()'>
-                    <v-icon color="grey-lighten-1">
+                    <v-icon>
                         mdi-delete-sweep
                     </v-icon>
                     <v-tooltip activator="parent" location="top">Delete Completed</v-tooltip>
@@ -67,7 +66,7 @@ const filteredNotes = computed(() => {
             <h6 :class="checkedTask(note.isCompleted) + ' text-h6 text-truncate text-' + note.color">{{ note.title }}</h6>
             <div class="d-flex mt-3 align-center">
                 <small class="text-subtitle-2 opacity-25">
-                    {{ note !== undefined ? new Date(note.datef).toLocaleDateString() : ''}}
+                    {{ note !== undefined ? new Date(note.date).toLocaleDateString() : ''}}
                 </small>
                 <v-btn
                     density="compact"
@@ -87,9 +86,9 @@ const filteredNotes = computed(() => {
                 </v-btn>
             </div>
         </v-sheet>
-        <v-sheet v-if="filteredNotes.length === 0"
-            ><v-alert type="error" title="Opps" text="The Notes you are looking for is not found"></v-alert
-        ></v-sheet>
+        <v-sheet v-if="filteredNotes.length === 0">
+            <v-alert type="info" title="Opps" text="The Notes you are looking for is not found"></v-alert>
+        </v-sheet>
     </div>
 </template>
 <style lang="scss">

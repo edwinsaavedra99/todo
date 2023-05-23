@@ -16,6 +16,7 @@ interface noteType {
     notes: NotesType[];
     notesContent: number;
     noteSearch: string;
+    filterCompleted: boolean;
 }
 
 export const useNoteStore = defineStore({
@@ -23,53 +24,78 @@ export const useNoteStore = defineStore({
     state: (): noteType => ({
         notes: [],
         notesContent: 1,
-        noteSearch: ''
+        noteSearch: '',
+        filterCompleted: false
     }),
     actions: {
-        // Fetch notes
         async fetchNotes() {
             try {
-                const data = await axios.get('/api/data/notes/NotesData');
+                let url = 'http://127.0.0.1:5000/tasks';
+                if(this.filterCompleted) {
+                    url += '?isCompleted=true'
+                }
+                const data = await axios.get(url);
                 this.notes = data.data;
             } catch (error) {
                 alert(error);
             }
         },
-
-        //select chat
+        async addNotes(body: any) {
+            try {
+                await axios.post('http://127.0.0.1:5000/tasks', body);
+                const data = await axios.get('http://127.0.0.1:5000/tasks');
+                this.notes = data.data;
+            } catch (error) {
+                alert(error);
+            }
+        },
         SelectNote(itemID: number) {
             this.notesContent = itemID;
         },
-        deleteNote(itemID: number) {
-            const index = this.notes.findIndex((p) => p.id == itemID);
-            this.notes.splice(index, 1);
+        filterCompletedUpdate() {
+          this.filterCompleted = !this.filterCompleted;
         },
-        deleteCompletes(){
-            this.notes = this.notes.filter((item)=>{
-                return !item.isCompleted;
-            });
+        async deleteNote(itemID: number) {
+            try {
+                await axios.delete('http://127.0.0.1:5000/tasks/' + itemID);
+                const data = await axios.get('http://127.0.0.1:5000/tasks');
+                this.notes = data.data;
+            } catch (error) {
+                alert(error);
+            }
         },
-        updateState(itemID: number, isCompleted: boolean) {
-            this.notes = map(this.notes, (note: any) => {
-                if (note.id === itemID) {
-                    return {
-                        ...note,
-                        isCompleted: isCompleted
-                    };
-                }
-                return note;
-            });
+        async deleteCompletes(){
+            try {
+                await axios.delete('http://127.0.0.1:5000/tasks/completed');
+                const data = await axios.get('http://127.0.0.1:5000/tasks');
+                this.notes = data.data;
+            } catch (error) {
+                alert(error);
+            }
         },
-        updateNote(itemID: number, itemColor: any) {
-            this.notes = map(this.notes, (note: any) => {
-                if (note.id === itemID) {
-                    return {
-                        ...note,
-                        color: itemColor
-                    };
-                }
-                return note;
-            });
+        async updateState(itemID: number, isCompleted: boolean) {
+            try {
+                await axios.put('http://127.0.0.1:5000/tasks/'+itemID, {
+                    ...this.notes.find((item)=> { return item.id == itemID}),
+                    isCompleted: isCompleted
+                });
+                const data = await axios.get('http://127.0.0.1:5000/tasks');
+                this.notes = data.data;
+            } catch (error) {
+                alert(error);
+            }
+        },
+        async updateNote(itemID: number, itemColor: any) {
+            try {
+                await axios.put('http://127.0.0.1:5000/tasks/'+itemID, {
+                    ...this.notes.find((item)=> { return item.id == itemID}),
+                    color: itemColor
+                });
+                const data = await axios.get('http://127.0.0.1:5000/tasks');
+                this.notes = data.data;
+            } catch (error) {
+                alert(error);
+            }
         }
     }
 });

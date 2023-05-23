@@ -11,7 +11,7 @@ onMounted(() => {
 });
 
 const getNote = computed(() => {
-    return store.notes[store.notesContent - 1];
+    return store.notes.find((item)=> { return item.id == store.notesContent});
 });
 </script>
 
@@ -26,8 +26,9 @@ const getNote = computed(() => {
             >
                 <v-card-item>
                     <h1 class='title-page-custom'>My task</h1>
-                    <h3 class='subtitle-current-date-custom'>
-                       {{ getNote !== undefined ? new Date(getNote.datef).toDateString() : '' }}
+                    <h3 v-if='getNote !== undefined' class='subtitle-current-date-custom'>
+                       {{ new Date(getNote.date).toDateString()}}
+                       {{ getNote.isCompleted === true ? '(COMPLETED)' : ''}}
                     </h3>
                 </v-card-item>
             </v-img>
@@ -42,7 +43,7 @@ const getNote = computed(() => {
                 <h4 class="text-h6 mb-4">Change Title</h4>
                 <v-text-field outlined name="Note" v-model="getNote.title"></v-text-field>
                 <h4 class="text-h6 mb-4">Change Descripcion</h4>
-                <v-textarea outlined name="Note" v-model="getNote.title"></v-textarea>
+                <v-textarea outlined name="Note" v-model="getNote.description"></v-textarea>
 
                 <h4 class="text-h6 mt-4 mb-4">Change Color</h4>
                 <div class="d-flex gap-3 align-center">
@@ -59,7 +60,9 @@ const getNote = computed(() => {
                 </div>
             </v-sheet>
         </v-sheet>
-        <v-sheet v-else class="pa-6"> <v-alert type="error" title="Opps" text="No task selected please select one"></v-alert></v-sheet>
+        <v-sheet v-else class="pa-6">
+            <v-alert type="info" title="Opps" text="No task selected please select one"></v-alert>
+        </v-sheet>
     </v-sheet>
 </template>
 <style>

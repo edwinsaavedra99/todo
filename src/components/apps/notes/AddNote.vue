@@ -7,6 +7,7 @@ import { uniqueId } from 'lodash';
 // common components
 const dialog = ref(false);
 const title = ref('');
+const description = ref('');
 const color = ref('primary');
 const store = useNoteStore();
 
@@ -23,11 +24,14 @@ function colorset(btcolor: any) {
 }
 const getId = getNote.value.length;
 function addNote() {
-    return (
-        getNote.value.push({ id: getId + 1, title: title.value, color: color.value, datef: new Date() }),
-        (dialog.value = false),
-        (title.value = '')
-    );
+    store.addNotes({
+        title: title.value,
+        color: color.value,
+        date: new Date(),
+        description: description.value,
+        isCompleted: false
+    })
+    return ((dialog.value = false),(title.value = ''),(description.value = ''));
 }
 </script>
 
@@ -38,7 +42,8 @@ function addNote() {
             <v-card>
                 <v-card-text>
                     <h4 class="text-h6 mb-4">Add Notes</h4>
-                    <v-textarea outlined name="Note" v-model="title"></v-textarea>
+                    <v-text-field outlined name="Note" v-model="title"></v-text-field>
+                    <v-textarea outlined name="Note" v-model="description"></v-textarea>
                     <h4 class="text-h6 mt-4 mb-4">Select Notes Color</h4>
                     <div class="d-flex gap-3 align-center">
                         <v-btn
