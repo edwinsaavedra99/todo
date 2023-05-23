@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// common components
 import AppBaseCard from '@/components/shared/AppBaseCard.vue';
-// component
 import NotesListing from '@/components/apps/notes/NotesListing.vue';
 import NotesContent from '@/components/apps/notes/NotesContent.vue';
 </script>
 
 <template>
-    <v-card elevation="10">
+    <v-card class='ma-5' elevation="10">
         <AppBaseCard>
             <template v-slot:leftPart>
                 <NotesListing/>
@@ -24,6 +21,9 @@ import NotesContent from '@/components/apps/notes/NotesContent.vue';
 </template>
 
 <style scoped lang="scss">
+.v-card {
+    width: auto!important;
+}
 @media (max-width: 1279px) {
     .v-card {
         position: unset;

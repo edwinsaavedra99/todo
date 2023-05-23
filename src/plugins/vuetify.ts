@@ -2,16 +2,8 @@ import { createVuetify } from 'vuetify';
 import '@mdi/font/css/materialdesignicons.css';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
-// import { BLUE_THEME} from '@/theme/LightTheme';
-import { BLUE_THEME, AQUA_THEME, PURPLE_THEME, GREEN_THEME, CYAN_THEME, ORANGE_THEME } from '@/theme/LightTheme';
-import {
-    DARK_BLUE_THEME,
-    DARK_AQUA_THEME,
-    DARK_ORANGE_THEME,
-    DARK_PURPLE_THEME,
-    DARK_GREEN_THEME,
-    DARK_CYAN_THEME
-} from '@/theme/DarkTheme';
+import { BLUE_THEME } from '@/theme/LightTheme';
+import { DARK_BLUE_THEME } from '@/theme/DarkTheme';
 
 export default createVuetify({
     components,
@@ -21,17 +13,7 @@ export default createVuetify({
         defaultTheme: 'BLUE_THEME',
         themes: {
             BLUE_THEME,
-            AQUA_THEME,
-            PURPLE_THEME,
-            GREEN_THEME,
-            CYAN_THEME,
-            ORANGE_THEME,
-            DARK_BLUE_THEME,
-            DARK_AQUA_THEME,
-            DARK_ORANGE_THEME,
-            DARK_PURPLE_THEME,
-            DARK_GREEN_THEME,
-            DARK_CYAN_THEME
+            DARK_BLUE_THEME
         }
     },
     defaults: {

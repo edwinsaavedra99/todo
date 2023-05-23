@@ -2,7 +2,7 @@
 import { onMounted, computed } from 'vue';
 import { useNoteStore } from '@/stores/apps/notes';
 import AddNote from './AddNote.vue';
-import { colorVariation } from '@/_mockApis/apps/notes/index';
+import { colorVariation } from '@/_mockApis/apps/notes';
 
 const store = useNoteStore();
 
@@ -22,7 +22,7 @@ const getNote = computed(() => {
                 :src="'src/assets/images/backgrounds/images.jfif'"
                 height="250px"
                 cover
-                class="align-end text-right"
+                class="align-end text-right rounded-b-shaped"
             >
                 <v-card-item>
                     <h1 class='title-page-custom'>My task</h1>

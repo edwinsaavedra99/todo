@@ -3,22 +3,17 @@ import { ref, onMounted, computed } from 'vue';
 import { useNoteStore } from '@/stores/apps/notes';
 
 const store = useNoteStore();
-
 onMounted(() => {
     store.fetchNotes();
 });
-
 const getNotes = computed(() => {
     return store.notes;
 });
-
 const checkedTask = function getCompleted(isCompleted: boolean) {
     if (isCompleted) return 'strikethrough-text';
     return '';
 }
-
 const NoteItem = getNotes;
-
 const searchValue = ref('');
 const filteredNotes = computed(() => {
     return NoteItem.value.filter((note) => {
@@ -30,7 +25,6 @@ const filteredNotes = computed(() => {
 <template>
     <div class="pa-6">
         <h4 class="text-h4 mb-8">My Tasks</h4>
-
         <div class="mb-5">
             <v-row class='px-3' align="center" justify="center">
                 <v-text-field

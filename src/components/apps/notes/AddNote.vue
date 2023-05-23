@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useNoteStore } from '@/stores/apps/notes';
-import { colorVariation } from '@/_mockApis/apps/notes/index';
-import { uniqueId } from 'lodash';
+import { colorVariation } from '@/_mockApis/apps/notes';
 
 // common components
 const dialog = ref(false);

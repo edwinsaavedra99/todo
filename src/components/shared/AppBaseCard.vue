@@ -8,7 +8,7 @@ const sDrawer = ref(false);
 <template>
     <div class="d-flex main-box">
         <div class="left-part" v-if="lgAndUp">
-            <perfect-scrollbar style="height: calc(100vh)">
+            <perfect-scrollbar style="height: calc(100vh - 50px)">
                 <slot name="leftPart"></slot>
             </perfect-scrollbar>
         </div>

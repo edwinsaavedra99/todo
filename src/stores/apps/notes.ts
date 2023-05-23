@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
-// project imports
 import axios from '@/utils/axios';
-import { map } from 'lodash';
 
 interface NotesType {
     id?: number | any;
