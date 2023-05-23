@@ -64,26 +64,29 @@ const filteredNotes = computed(() => {
             v-if="filteredNotes.length > 0"
         >
             <h6 :class="checkedTask(note.isCompleted) + ' text-h6 text-truncate text-' + note.color">{{ note.title }}</h6>
-            <div class="d-flex mt-3 align-center">
-                <small class="text-subtitle-2 opacity-25">
-                    {{ note !== undefined ? new Date(note.date).toLocaleDateString() : ''}}
+            <div class="d-flex mt-3 align-items-center">
+                <small v-if='note !== undefined' :class="checkedTask(note.isCompleted) + ' text-subtitle-2 opacity-25'">
+                    {{ new Date(note.date).toLocaleDateString() + ' '}}
+                    {{ note.isCompleted ? '(COMPLETED)' : '' }}
                 </small>
-                <v-btn
-                    density="compact"
+                <div style='margin-left: auto'>
+                    <v-btn
                     icon
                     variant="text"
                     class="ml-auto" size="x-small"
                     @click="store.updateState(note.id,!note.isCompleted)"
                 >
                     <v-tooltip activator="parent" location="top">Mark Completed</v-tooltip>
-                    <v-icon color="grey-lighten-1">
-                        mdi-check
+                    <v-icon size='18' color="grey-lighten-1">
+                        mdi-check-circle
                     </v-icon>
                 </v-btn>
-                <v-btn icon variant="text" class="ml-auto" size="x-small" @click="store.deleteNote(note.id)">
-                    <v-tooltip activator="parent" location="top">Delete</v-tooltip>
-                    <TrashIcon size="18"/>
-                </v-btn>
+                    <v-btn icon variant="text" class="ml-auto" size="x-small" @click="store.deleteNote(note.id)">
+                        <v-tooltip activator="parent" location="top">Delete</v-tooltip>
+                        <TrashIcon size="18"/>
+                    </v-btn>
+                </div>
+
             </div>
         </v-sheet>
         <v-sheet v-if="filteredNotes.length === 0">

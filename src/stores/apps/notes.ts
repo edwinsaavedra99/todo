@@ -17,6 +17,7 @@ interface noteType {
     notesContent: number;
     noteSearch: string;
     filterCompleted: boolean;
+    timeout: any;
 }
 
 export const useNoteStore = defineStore({
@@ -25,7 +26,8 @@ export const useNoteStore = defineStore({
         notes: [],
         notesContent: 1,
         noteSearch: '',
-        filterCompleted: false
+        filterCompleted: false,
+        timeout: null
     }),
     actions: {
         async fetchNotes() {
@@ -96,6 +98,20 @@ export const useNoteStore = defineStore({
             } catch (error) {
                 alert(error);
             }
+        },
+        async updateNoteBody(itemID: number, body: any) {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+            this.timeout = setTimeout(async () => {
+                try {
+                    await axios.put('http://127.0.0.1:5000/tasks/' + itemID, body);
+                    const data = await axios.get('http://127.0.0.1:5000/tasks');
+                    this.notes = data.data;
+                } catch (error) {
+                    alert(error);
+                }
+            }, 500);
         }
     }
 });

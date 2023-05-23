@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useNoteStore } from '@/stores/apps/notes';
 import AddNote from './AddNote.vue';
 import { colorVariation } from '@/_mockApis/apps/notes/index';
@@ -19,7 +19,7 @@ const getNote = computed(() => {
     <v-sheet>
         <v-sheet>
             <v-img
-                :src="'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8H8_LzENOFISNQuswFxhzsl4gMkanbbmgdw&usqp=CAU'"
+                :src="'src/assets/images/backgrounds/images.jfif'"
                 height="250px"
                 cover
                 class="align-end text-right"
@@ -35,16 +35,19 @@ const getNote = computed(() => {
         </v-sheet>
         <v-sheet class="py-3 pl-6 pr-4 d-flex align-center">
             <h4 class="text-h6">Edit Task</h4>
-            <div class="ml-auto"><AddNote /></div>
+            <div class="mx-2 ml-auto"><AddNote /></div>
         </v-sheet>
         <v-divider></v-divider>
         <v-sheet v-if="getNote">
             <v-sheet class="pa-6">
                 <h4 class="text-h6 mb-4">Change Title</h4>
-                <v-text-field outlined name="Note" v-model="getNote.title"></v-text-field>
-                <h4 class="text-h6 mb-4">Change Descripcion</h4>
-                <v-textarea outlined name="Note" v-model="getNote.description"></v-textarea>
-
+                <v-text-field
+                    outlined name="Note" v-model="getNote.title"
+                    @keyup.stop="store.updateNoteBody(getNote.id, getNote)"></v-text-field>
+                <h4 class="text-h6 mb-4">Change Description</h4>
+                <v-textarea
+                    outlined name="Note" v-model="getNote.description"
+                    @keyup.stop="store.updateNoteBody(getNote.id, getNote)"></v-textarea>
                 <h4 class="text-h6 mt-4 mb-4">Change Color</h4>
                 <div class="d-flex gap-3 align-center">
                     <v-btn
