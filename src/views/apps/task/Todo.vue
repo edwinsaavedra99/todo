@@ -1,31 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// common components
-import BaseBreadcrumb from '@/components/shared/BaseBreadcrumb.vue';
 import AppBaseCard from '@/components/shared/AppBaseCard.vue';
-// component
 import NotesListing from '@/components/apps/notes/NotesListing.vue';
 import NotesContent from '@/components/apps/notes/NotesContent.vue';
-// theme breadcrumb
-const page = ref({ title: 'TODO app' });
-
-const breadcrumbs = ref([
-    {
-        text: 'List TODO App',
-        disabled: true,
-        href: '#'
-    }
-]);
 </script>
 
 <template>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-    <v-card elevation="10">
+    <v-card class='ma-5' elevation="10">
         <AppBaseCard>
-            <template v-slot:leftpart>
+            <template v-slot:leftPart>
                 <NotesListing/>
             </template>
-            <template v-slot:rightpart>
+            <template v-slot:rightPart>
                 <NotesContent/>
             </template>
             <template v-slot:mobileLeftContent>
@@ -36,6 +21,9 @@ const breadcrumbs = ref([
 </template>
 
 <style scoped lang="scss">
+.v-card {
+    width: auto!important;
+}
 @media (max-width: 1279px) {
     .v-card {
         position: unset;

@@ -1,30 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useDisplay } from 'vuetify';
-const { xs, lgAndUp } = useDisplay();
+const { lgAndUp } = useDisplay();
 const sDrawer = ref(false);
 </script>
 
 <template>
-    <!---/Left chat list -->
-    <div class="d-flex mainbox">
+    <div class="d-flex main-box">
         <div class="left-part" v-if="lgAndUp">
-            <!-- <perfect-scrollbar style="height: calc(100vh - 290px)"> -->
-            <slot name="leftpart"></slot>
-            <!-- </perfect-scrollbar> -->
+            <perfect-scrollbar style="height: calc(100vh - 50px)">
+                <slot name="leftPart"></slot>
+            </perfect-scrollbar>
         </div>
 
-        <!---right chat conversation -->
         <div class="right-part">
-            <!---Toggle Button For mobile-->
             <v-btn block @click="sDrawer = !sDrawer" variant="text" class="d-lg-none d-md-flex d-sm-flex">
                 <Menu2Icon size="20" class="mr-2" /> Menu
             </v-btn>
             <v-divider class="d-lg-none d-block" />
-            <slot name="rightpart"></slot>
+            <slot name="rightPart"></slot>
         </div>
-
-        <!---right chat conversation -->
     </div>
 
     <v-navigation-drawer temporary v-model="sDrawer" width="320" top v-if="!lgAndUp">
@@ -35,12 +30,12 @@ const sDrawer = ref(false);
 </template>
 
 <style lang="scss">
-.mainbox {
+.main-box {
     position: relative;
     overflow: hidden;
 }
 .left-part {
-    width: 320px;
+    width: 620px;
     border-right: 1px solid rgb(var(--v-theme-borderColor));
     min-height: 500px;
     transition: 0.1s ease-in;
