@@ -3,12 +3,13 @@ import axios from '@/utils/axios';
 import { api } from '../../../envd';
 
 interface NotesType {
-    id?: number | any;
-    color?: string;
-    title?: string;
-    date?: Date | any;
+    id: number | any;
+    color: string;
+    title: string;
+    description: string;
+    date: Date | any;
     deleted?: boolean;
-    isCompleted?: boolean;
+    isCompleted: boolean;
 }
 
 interface noteType {
@@ -85,10 +86,10 @@ export const useNoteStore = defineStore({
                 alert(error);
             }
         },
-        async updateNote(itemID: number, itemColor: any) {
+        async updateNote(body: any, itemColor: any) {
             try {
-                await axios.put(api + '/tasks/'+itemID, {
-                    ...this.notes.find((item)=> { return item.id == itemID}),
+                await axios.put(api + '/tasks/'+body.id, {
+                    ...this.notes.find((item)=> { return item.id == body.id}),
                     color: itemColor
                 });
                 this.fetchNotes();
@@ -96,13 +97,16 @@ export const useNoteStore = defineStore({
                 alert(error);
             }
         },
-        async updateNoteBody(itemID: number, body: any) {
+        async updateNoteBody(body: any) {
+            if (body === undefined) {
+                return;
+            }
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
             this.timeout = setTimeout(async () => {
                 try {
-                    await axios.put(api + '/tasks/' + itemID, body);
+                    await axios.put(api + '/tasks/' + body.id, body);
                     this.fetchNotes();
                 } catch (error) {
                     alert(error);

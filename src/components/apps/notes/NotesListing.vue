@@ -9,7 +9,7 @@ onMounted(() => {
 const getNotes = computed(() => {
     return store.notes;
 });
-const checkedTask = function getCompleted(isCompleted: boolean) {
+const checkedTask = function getCompleted(isCompleted: boolean | undefined) {
     if (isCompleted) return 'strikethrough-text';
     return '';
 }

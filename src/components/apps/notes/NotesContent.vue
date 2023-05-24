@@ -38,16 +38,16 @@ const getNote = computed(() => {
             <div class="mx-2 ml-auto"><AddNote /></div>
         </v-sheet>
         <v-divider></v-divider>
-        <v-sheet v-if="getNote">
+        <v-sheet v-if="getNote!==undefined && store !== undefined">
             <v-sheet class="pa-6">
                 <h4 class="text-h6 mb-4">Change Title</h4>
                 <v-text-field
                     outlined name="Note" v-model="getNote.title"
-                    @keyup.stop="store.updateNoteBody(getNote.id, getNote)"></v-text-field>
+                    @keyup.stop="store.updateNoteBody(getNote)"></v-text-field>
                 <h4 class="text-h6 mb-4">Change Description</h4>
                 <v-textarea
                     outlined name="Note" v-model="getNote.description"
-                    @keyup.stop="store.updateNoteBody(getNote.id, getNote)"></v-textarea>
+                    @keyup.stop="store.updateNoteBody(getNote)"></v-textarea>
                 <h4 class="text-h6 mt-4 mb-4">Change Color</h4>
                 <div class="d-flex gap-3 align-center">
                     <v-btn
@@ -56,7 +56,7 @@ const getNote = computed(() => {
                         :key="btcolor.id"
                         size="x-small"
                         :color="btcolor.color"
-                        @click="store.updateNote(getNote.id, btcolor.color)"
+                        @click="store.updateNote(getNote, btcolor.color)"
                     >
                         <CheckIcon width="16" v-if="getNote.color === btcolor.color" />
                     </v-btn>

@@ -86,20 +86,15 @@
     width: 100%;
     padding: 0px;
     position: relative;
-    background-image: url('@/assets/images/landingpage/shape/line-bg.svg');
     background-repeat: no-repeat;
     background-position: center center;
 }
 
-//
-// money back
-//
 .money-back {
     overflow: hidden;
     width: 100%;
     padding: 0px;
     position: relative;
-    background-image: url('@/assets/images/landingpage/shape/line-bg-2.svg');
     background-repeat: no-repeat;
     background-position: center center;
 }
@@ -137,7 +132,6 @@
         background-repeat: no-repeat;
         content: '';
         position: absolute;
-        background-image: url('@/assets/images/landingpage/shape/shape-2.svg');
         bottom: -10px;
         height: 400px;
         left: 35px;
@@ -147,7 +141,6 @@
         background-repeat: no-repeat;
         content: '';
         position: absolute;
-        background-image: url('@/assets/images/landingpage/shape/shape-1.svg');
         height: 252px;
         right: -50px;
         top: -40px;
