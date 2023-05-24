@@ -11,6 +11,9 @@ onMounted(() => {
 });
 
 const getNote = computed(() => {
+    if (store.notesContent === -1 && store.notes.length > 0) {
+        return store.notes[0];
+    }
     return store.notes.find((item)=> { return item.id == store.notesContent});
 });
 </script>
@@ -19,7 +22,7 @@ const getNote = computed(() => {
     <v-sheet>
         <v-sheet>
             <v-img
-                :src="'src/assets/images/backgrounds/images.jfif'"
+                src="https://fondosmil.com/fondo/17010.jpg"
                 height="250px"
                 cover
                 class="align-end text-right rounded-b-shaped"

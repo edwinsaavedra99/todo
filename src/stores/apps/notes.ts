@@ -24,7 +24,7 @@ export const useNoteStore = defineStore({
     id: 'notes',
     state: (): noteType => ({
         notes: [],
-        notesContent: 1,
+        notesContent: -1,
         noteSearch: '',
         filterCompleted: false,
         timeout: null

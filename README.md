@@ -7,7 +7,7 @@ Este aplicativo emula una lista de tareas en formato TODO, se puede:
 * Marcar las tareas como completadas
 * Eliminar tareas
 
-DEMO FUNCIONAL: 
+DEMO FUNCIONAL: https://develop.d2oplqelz9fwxk.amplifyapp.com/
 
 # Run APP
 
@@ -15,10 +15,12 @@ DEMO FUNCIONAL:
 
 `npm run dev`
 
-Local:   http://127.0.0.1:5173/
+Local: http://127.0.0.1:5173/
 
 
 Se emulo el comportamiento de un .env en el archivo envd.ts este puede ser reemplazado para correr un API local
+
+`export const api = 'https://polar-cove-32999.herokuapp.com';`
 
 En caso no se tenga vue 3
 
